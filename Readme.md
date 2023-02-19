@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Динара Ходжаева](https://up.htmlacademy.ru/javascript/28/user/676715).
-* Наставник: `Неизвестно`.
+* Наставник: [Иван Бессалов](https://htmlacademy.ru/profile/lvov).
 
 ---
 
