@@ -1,3 +1,5 @@
-import {getPhoto} from './data.js';
+// import {getPhoto} from './data.js';
 
-getPhoto();
+// getPhoto();
+
+import './miniature.js';
