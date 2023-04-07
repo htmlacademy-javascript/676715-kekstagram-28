@@ -1,5 +1,9 @@
-// import {getPhoto} from './data.js';
+// import './miniature.js';
+// import {renderMiniatureList} from './miniature.js';
+// import './big-picture.js';
 
-// getPhoto();
+import {getPhoto} from './data.js';
+import {renderGallery} from './gallery.js';
 
-import './miniature.js';
+// renderMiniatureList(getPhoto());
+renderGallery(getPhoto());
