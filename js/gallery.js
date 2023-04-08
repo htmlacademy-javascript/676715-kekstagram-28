@@ -5,7 +5,6 @@ const container = document.querySelector('.pictures');
 
 const renderGallery = (photos) => {
   container.addEventListener('click', (evt) => {
-    debugger;
     const miniature = evt.target.closest('[data-miniature-id]');
     if (!miniature) {
       return;
@@ -17,7 +16,9 @@ const renderGallery = (photos) => {
     openBigPhoto(photo);
   });
 
-  renderMiniatures(photos, container);
+  // renderMiniatures(photos, container);
+  // renderMiniatures(container);
+  renderMiniatures();
 };
 
 export {renderGallery};
