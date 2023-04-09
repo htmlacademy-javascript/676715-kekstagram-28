@@ -1,10 +1,10 @@
 import {getRandomInteger, getRandomArrayElement} from './util.js';
 
 const PHOTO_COUNT = 25;
-const AVATAR_COUNT = 25;
+const AVATAR_COUNT = 6;
 const LIKE_MIN_COUNT = 15;
 const LIKE_MAX_COUNT = 200;
-const COMMENT_COUNT = 5;
+const COMMENT_COUNT = 10;
 const DESCRIPTIONS = [
   'Отпуск 2023',
   'Выходные',
@@ -52,7 +52,7 @@ const createPhoto = (index) => ({
   url: `photos/${index}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(LIKE_MIN_COUNT, LIKE_MAX_COUNT),
-  comments: Array.from({length: getRandomInteger(0, COMMENT_COUNT)}, createComment)
+  comments: Array.from({length: getRandomInteger(1, COMMENT_COUNT)}, createComment)
 });
 
 const getPhoto = () => Array.from({length: PHOTO_COUNT}, (_, photoIndex) => createPhoto(photoIndex + 1));
