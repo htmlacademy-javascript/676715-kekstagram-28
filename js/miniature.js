@@ -1,14 +1,10 @@
-import {getPhoto} from './data.js';
-
 const miniatureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const miniatureContainer = document.querySelector('.pictures');
 
-const miniatures = getPhoto();
-
-const renderMiniatures = () => {
+const renderMiniatures = (photos) => {
   const miniaturesFragment = document.createDocumentFragment();
 
-  miniatures.forEach(({id, url, description, likes, comments}) => {
+  photos.forEach(({id, url, description, likes, comments}) => {
     const miniatureElement = miniatureTemplate.cloneNode(true);
     miniatureElement.querySelector('.picture__img').src = url;
     miniatureElement.querySelector('.picture__img').alt = description;
