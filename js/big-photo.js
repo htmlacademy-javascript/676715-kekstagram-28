@@ -7,6 +7,7 @@ const commentsCount = document.querySelector('.social__comment-count');
 const commentList = document.querySelector('.social__comments');
 const commentTemplate = document.querySelector('.social__comment');
 const commentsLoader = document.querySelector('.comments-loader');
+let onCommentsShownClick;
 
 const COMMENTS_PER_PORTION = 5;
 
@@ -36,10 +37,11 @@ const renderComments = (comments) => {
   } else {
     createCommentList(comments.slice(commentsShown, COMMENTS_PER_PORTION));
     commentsLoader.classList.remove('hidden');
+    commentsLoader.addEventListener('click', onCommentsShownButtonClick);
     commentsShown += COMMENTS_PER_PORTION;
   }
 
-  const onCommentsShownButtonClick = () => {
+  function onCommentsShownButtonClick () {
     commentList.innerHTML = '';
     createCommentList(comments.slice(commentsShown, commentsShown + COMMENTS_PER_PORTION));
     commentsShown += COMMENTS_PER_PORTION;
@@ -48,10 +50,11 @@ const renderComments = (comments) => {
       commentsLoader.classList.add('hidden');
     }
     commentsCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментариев`;
-  };
+  }
 
-  commentsLoader.addEventListener('click', onCommentsShownButtonClick);
   commentsCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментариев`;
+
+  return onCommentsShownButtonClick;
 };
 
 const renderPhotoDetails = ({url, description, likes}) => {
@@ -70,14 +73,14 @@ const openBigPhoto = (data) => {
 
   renderPhotoDetails(data);
   commentList.innerHTML = '';
-  renderComments(data.comments);
-  commentsLoader.removeEventListener('click', renderComments.onCommentsShownButtonClick);
+  onCommentsShownClick = renderComments(data.comments);
 };
 
 const closeBigPhoto = () => {
   bigPhoto.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  commentsLoader.removeEventListener('click', onCommentsShownClick);
 };
 
 function onDocumentKeydown (evt) {
