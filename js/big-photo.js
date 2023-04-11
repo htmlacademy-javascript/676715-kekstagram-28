@@ -7,7 +7,7 @@ const commentsCount = document.querySelector('.social__comment-count');
 const commentList = document.querySelector('.social__comments');
 const commentTemplate = document.querySelector('.social__comment');
 const commentsLoader = document.querySelector('.comments-loader');
-let onCommentsShownClick;
+let onCommentsShowClick;
 
 const COMMENTS_PER_PORTION = 5;
 
@@ -28,33 +28,32 @@ const createCommentList = (comments) => {
 };
 
 const renderComments = (comments) => {
-  let commentsShown = 0;
+  let commentsShow = 0;
 
   if (comments.length <= COMMENTS_PER_PORTION) {
     createCommentList(comments);
-    commentsShown = comments.length;
+    commentsShow = comments.length;
     commentsLoader.classList.add('hidden');
   } else {
-    createCommentList(comments.slice(commentsShown, COMMENTS_PER_PORTION));
+    createCommentList(comments.slice(commentsShow, COMMENTS_PER_PORTION));
     commentsLoader.classList.remove('hidden');
-    commentsLoader.addEventListener('click', onCommentsShownButtonClick);
-    commentsShown += COMMENTS_PER_PORTION;
+    commentsLoader.addEventListener('click', onCommentsShowButtonClick);
+    commentsShow += COMMENTS_PER_PORTION;
   }
 
-  function onCommentsShownButtonClick () {
-    commentList.innerHTML = '';
-    createCommentList(comments.slice(commentsShown, commentsShown + COMMENTS_PER_PORTION));
-    commentsShown += COMMENTS_PER_PORTION;
-    if (commentsShown >= comments.length) {
-      commentsShown = comments.length;
+  function onCommentsShowButtonClick () {
+    createCommentList(comments.slice(commentsShow, commentsShow + COMMENTS_PER_PORTION));
+    commentsShow += COMMENTS_PER_PORTION;
+    if (commentsShow >= comments.length) {
+      commentsShow = comments.length;
       commentsLoader.classList.add('hidden');
     }
-    commentsCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментариев`;
+    commentsCount.innerHTML = `${commentsShow} из <span class="comments-count">${comments.length}</span> комментариев`;
   }
 
-  commentsCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментариев`;
+  commentsCount.innerHTML = `${commentsShow} из <span class="comments-count">${comments.length}</span> комментариев`;
 
-  return onCommentsShownButtonClick;
+  return onCommentsShowButtonClick;
 };
 
 const renderPhotoDetails = ({url, description, likes}) => {
@@ -73,14 +72,14 @@ const openBigPhoto = (data) => {
 
   renderPhotoDetails(data);
   commentList.innerHTML = '';
-  onCommentsShownClick = renderComments(data.comments);
+  onCommentsShowClick = renderComments(data.comments);
 };
 
 const closeBigPhoto = () => {
   bigPhoto.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  commentsLoader.removeEventListener('click', onCommentsShownClick);
+  commentsLoader.removeEventListener('click', onCommentsShowClick);
 };
 
 function onDocumentKeydown (evt) {
