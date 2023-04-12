@@ -70,8 +70,8 @@ const validateTags = (value) => {
 pristine.addValidator(hashtagField, validateTags, TAG_ERROR_TEXT);
 
 const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+  // evt.preventDefault();
+  // pristine.validate();
 };
 
 fileField.addEventListener('change', onFileChange);
