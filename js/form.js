@@ -49,22 +49,22 @@ const onFileChange = () => {
   openModal();
 };
 
-const onFormClose = () => {
+const onFormCloseClick = () => {
   closeModal();
 };
 
-const validTagsCount = (tags) => tags.length <= TAG_COUNT;
+const isValidTagsCount = (tags) => tags.length <= TAG_COUNT;
 
-const validUniqueTags = (tags) => {
+const isValidUniqueTags = (tags) => {
   const lowerCaseTags = tags.map((tag) => tag.toLowerCase());
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
-const validTagSymbols = (tag) => VALID_SYMBOLS.test(tag);
+const isValidTagSymbols = (tag) => VALID_SYMBOLS.test(tag);
 
 const validateTags = (value) => {
   const tags = value.trim().split(' ').filter((tag) => tag.trim().length);
-  return validTagsCount(tags) && validUniqueTags(tags) && tags.every(validTagSymbols);
+  return isValidTagsCount(tags) && isValidUniqueTags(tags) && tags.every(isValidTagSymbols);
 };
 
 pristine.addValidator(hashtagField, validateTags, TAG_ERROR_TEXT);
@@ -73,5 +73,5 @@ const onFormSubmit = () => {
 };
 
 fileField.addEventListener('change', onFileChange);
-formClose.addEventListener('click', onFormClose);
+formClose.addEventListener('click', onFormCloseClick);
 form.addEventListener('submit', onFormSubmit);

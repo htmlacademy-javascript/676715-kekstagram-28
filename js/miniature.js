@@ -6,8 +6,9 @@ const renderMiniatures = (photos) => {
 
   photos.forEach(({id, url, description, likes, comments}) => {
     const miniatureElement = miniatureTemplate.cloneNode(true);
-    miniatureElement.querySelector('.picture__img').src = url;
-    miniatureElement.querySelector('.picture__img').alt = description;
+    const miniaturePicture = miniatureElement.querySelector('.picture__img');
+    miniaturePicture.src = url;
+    miniaturePicture.alt = description;
     miniatureElement.querySelector('.picture__likes').textContent = likes;
     miniatureElement.querySelector('.picture__comments').textContent = comments.length;
     miniatureElement.dataset.miniatureId = id;
