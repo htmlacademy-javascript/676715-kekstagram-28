@@ -6,6 +6,11 @@ const TAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const TAG_ERROR_TEXT = 'Хештеги неверно заполнены';
 
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
+
 const body = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
 const fileField = document.querySelector('#upload-file');
@@ -13,6 +18,7 @@ const overlay = document.querySelector('.img-upload__overlay');
 const formClose = form.querySelector('#upload-cancel');
 const hashtagField = form.querySelector('.text__hashtags');
 const descriptionField = form.querySelector('.text__description');
+const submitButton = form.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -20,6 +26,16 @@ const pristine = new Pristine(form, {
   errorTextTag: 'p',
   errorTextClass: 'effects__label',
 });
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
 
 const openModal = () => {
   overlay.classList.remove('hidden');
@@ -69,9 +85,20 @@ const validateTags = (value) => {
 
 pristine.addValidator(hashtagField, validateTags, TAG_ERROR_TEXT);
 
-const onFormSubmit = () => {
+const setOnFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', async(evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      await onSuccess(new FormData(form));
+      unblockSubmitButton();
+    }
+  });
 };
 
 fileField.addEventListener('change', onFileChange);
 formClose.addEventListener('click', onFormCloseClick);
-form.addEventListener('submit', onFormSubmit);
+
+export {setOnFormSubmit, closeModal};

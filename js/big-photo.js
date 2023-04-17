@@ -101,4 +101,4 @@ bigPhotoClose.addEventListener('click', () => {
   closeBigPhoto();
 });
 
-export {openBigPhoto};
+export {openBigPhoto, closeBigPhoto};
